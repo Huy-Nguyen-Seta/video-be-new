@@ -38,10 +38,10 @@ export class CommentsService {
       data: {
         content: this.clean(content),
         videoId,
-        authorId: user.id,
+        userId: user.id,
         parentId,
       },
-      include: { author: { select: { id: true, name: true, avataUrl: true } } },
+      include: { user: { select: { id: true, name: true, avataUrl: true } } },
     });
   }
 
@@ -68,24 +68,18 @@ export class CommentsService {
     return { items, meta: bildPageMeta(query.page, query.limit, total) };
   }
   async update(user: AuthUser, commentId: string, content: string) {
-    const comment = await this.prisma.comment.assertOwnerOrAdmin(
-      user,
-      commentId,
-    );
+    const comment = await this.assertOwnerOrAdmin(user, commentId);
     return this.prisma.comment.update({
       where: { id: comment.id },
       data: { content: this.clean(content) },
       include: {
-        user: { select: { select: { id: true, name: true, avatarUrl: true } } },
+        user: { select: { id: true, name: true, avataUrl: true } },
       },
     });
   }
 
   async remove(user: AuthUser, commentId: string) {
-    const comment = await this.prisma.comment.assertOwnerOrAdmin(
-      user,
-      commentId,
-    );
+    const comment = await this.assertOwnerOrAdmin(user, commentId);
     await this.prisma.comment.delete({ where: { id: comment.id } });
     return { success: true };
   }

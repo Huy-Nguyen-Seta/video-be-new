@@ -24,14 +24,14 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
   @Public()
-  @Get('videos:/:videoId/comments')
+  @Get('videos/:videoId/comments')
   @ApiOperation({ summary: 'List comments for a video' })
   list(@Param('videoId') videoId: string, @Query() query: PaginationQueryDto) {
     return this.commentsService.listForVideo(videoId, query);
   }
 
   @ApiBearerAuth()
-  @Post('videos:/:videoId/comments')
+  @Post('videos/:videoId/comments')
   @ApiOperation({ summary: 'Create a comment for a video' })
   create(
     @CurrentUser() user: AuthUser,
@@ -51,10 +51,10 @@ export class CommentsController {
   @ApiOperation({ summary: 'Update a comment for a video' })
   update(
     @CurrentUser() user: AuthUser,
-    @Param('videoId') videoId: string,
+    @Param('id') id: string,
     @Body() dto: UpdateCommentDto,
   ) {
-    return this.commentsService.update(user, videoId, dto.content);
+    return this.commentsService.update(user, id, dto.content);
   }
 
   @ApiBearerAuth()
