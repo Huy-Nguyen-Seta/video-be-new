@@ -5,16 +5,16 @@ import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './config/env.validation';
 import { LoggerModule } from 'nestjs-pino';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { Prisma } from '@prisma/client';
 import { PrismaModule } from './prisma/prisma.module';
-import Redis from 'ioredis';
 import { RedisModule } from './redis/redis.nodule';
+import { AuthModule } from './modules/auth/auth.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [() => import('./config/configuration').then((m) => m.default)],
+      load: [configuration],
       validate: validateEnv,
     }),
     LoggerModule.forRoot({
@@ -40,6 +40,7 @@ import { RedisModule } from './redis/redis.nodule';
     ]),
     PrismaModule,
     RedisModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
