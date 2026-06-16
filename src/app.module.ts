@@ -4,11 +4,18 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './config/env.validation';
 import { LoggerModule } from 'nestjs-pino';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
 import { RedisModule } from './redis/redis.nodule';
 import { AuthModule } from './modules/auth/auth.module';
 import configuration from './config/configuration';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { JWTAuthGuard } from './common/gruards/jwt-auth.gruad';
+import { RolesGuard } from './common/gruards/roles.gruad';
+import { ALL } from 'dns';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.fillter';
+import { TranformInterceptor } from './common/interceptors/transform.interceptor';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
   imports: [
@@ -41,8 +48,15 @@ import configuration from './config/configuration';
     PrismaModule,
     RedisModule,
     AuthModule,
+    StorageModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    { provide: APP_GUARD, useClass: JWTAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    { provide: APP_INTERCEPTOR, useClass: TranformInterceptor },
+  ],
 })
 export class AppModule {}
