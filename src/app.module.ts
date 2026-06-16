@@ -7,6 +7,8 @@ import { LoggerModule } from 'nestjs-pino';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { Prisma } from '@prisma/client';
 import { PrismaModule } from './prisma/prisma.module';
+import Redis from 'ioredis';
+import { RedisModule } from './redis/redis.nodule';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { PrismaModule } from './prisma/prisma.module';
       },
     ]),
     PrismaModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
