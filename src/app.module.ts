@@ -15,6 +15,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.fillter';
 import { TranformInterceptor } from './common/interceptors/transform.interceptor';
 import { StorageModule } from './modules/storage/storage.module';
 import { UsersModule } from './modules/users/users.module';
+import { QueueModule } from './modules/queue/queue.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     StorageModule,
     UsersModule,
+    QueueModule,
   ],
   controllers: [AppController],
   providers: [
