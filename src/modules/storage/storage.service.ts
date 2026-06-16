@@ -38,11 +38,11 @@ export class StorageService implements OnModuleInit {
   }
 
   async uploadFile(
-    file: { buffer: Buffer; mimetype: string; originalName: string },
+    file: { buffer: Buffer; mimetype: string; originalname: string },
     prefix: string,
   ): Promise<{ key: string; url: string }> {
-    const ext = file.originalName.includes('.')
-      ? file.originalName.split('.').pop()
+    const ext = file.originalname.includes('.')
+      ? file.originalname.split('.').pop()
       : 'bin';
     const key = `${prefix}/${randomUUID()}.${ext}`;
     await this.client.putObject(
@@ -86,7 +86,7 @@ export class StorageService implements OnModuleInit {
       ],
     });
   }
-  private urlFor(key: string): string {
+  public urlFor(key: string): string {
     return `${this.publicUrl}/${this.bucket}/${key}`;
   }
 }

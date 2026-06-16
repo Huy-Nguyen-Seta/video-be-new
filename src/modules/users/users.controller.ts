@@ -62,7 +62,7 @@ export class UsersController {
     return this.users.updateAvatar(userId, {
       buffer: file.buffer,
       mimetype: file.mimetype,
-      originalName: file.originalname,
+      originalname: file.originalname,
       size: file.size,
     });
   }

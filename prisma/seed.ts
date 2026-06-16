@@ -81,7 +81,7 @@ async function main() {
         description: `Description for ${s.t} ${i + 1}`,
         status: VideoStatus.READY,
         originalKey: `sample-video-${i + 1}.mp4`,
-        thubnailUrl: `https://sample-videos.com/img/Sample-jpg-image-50kb.jpg`,
+        thumbnailUrl: `https://sample-videos.com/img/Sample-jpg-image-50kb.jpg`,
         playbackUrl: s.mp4,
         durationSec: 10 + i * 5,
         viewCount: Math.floor(Math.random() * 5000),

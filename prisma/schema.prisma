@@ -63,7 +63,7 @@ model Video {
   description String?
   status      VideoStatus @default(PROCESSING)
   originalKey String      @map("original_key")
-  thubnailUrl String?     @map("thumbnail_url")
+  thumbnailUrl String?    @map("thumbnail_url")
   playbackUrl String?     @map("playback_url")
   durationSec Int?        @map("duration_sec")
   viewCount   Int         @default(0) @map("view_count")

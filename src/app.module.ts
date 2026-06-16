@@ -16,6 +16,8 @@ import { TranformInterceptor } from './common/interceptors/transform.interceptor
 import { StorageModule } from './modules/storage/storage.module';
 import { UsersModule } from './modules/users/users.module';
 import { QueueModule } from './modules/queue/queue.module';
+import { VideosModule } from './modules/videos/videos.module';
+import { VideosController } from './mkdir/modules/videos/videos.controller';
 
 @Module({
   imports: [
@@ -51,8 +53,9 @@ import { QueueModule } from './modules/queue/queue.module';
     StorageModule,
     UsersModule,
     QueueModule,
+    VideosModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, VideosController],
   providers: [
     { provide: APP_GUARD, useClass: JWTAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },

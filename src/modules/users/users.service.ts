@@ -62,7 +62,7 @@ export class UsersService {
     file?: {
       buffer: Buffer;
       mimetype: string;
-      originalName: string;
+      originalname: string;
       size: number;
     },
   ) {
