@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { validateEnv } from './config/env.validation';
 import { LoggerModule } from 'nestjs-pino';
@@ -12,10 +11,10 @@ import configuration from './config/configuration';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { JWTAuthGuard } from './common/gruards/jwt-auth.gruad';
 import { RolesGuard } from './common/gruards/roles.gruad';
-import { ALL } from 'dns';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.fillter';
 import { TranformInterceptor } from './common/interceptors/transform.interceptor';
 import { StorageModule } from './modules/storage/storage.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -49,6 +48,7 @@ import { StorageModule } from './modules/storage/storage.module';
     RedisModule,
     AuthModule,
     StorageModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [
