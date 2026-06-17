@@ -43,9 +43,9 @@ export interface PageMeta {
 }
 
 export function bildPageMeta(
-  total: number,
   page: number,
   limit: number,
+  total: number,
 ): PageMeta {
   const totalPages = Math.ceil(total / limit);
   return {

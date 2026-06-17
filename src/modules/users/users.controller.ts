@@ -57,13 +57,8 @@ export class UsersController {
   )
   updateAvatar(
     @CurrentUser('id') userId: string,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.users.updateAvatar(userId, {
-      buffer: file.buffer,
-      mimetype: file.mimetype,
-      originalname: file.originalname,
-      size: file.size,
-    });
+    return this.users.updateAvatar(userId, file);
   }
 }
