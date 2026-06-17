@@ -6,6 +6,7 @@ import { Logger } from 'nestjs-pino';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -34,18 +35,17 @@ async function bootstrap() {
       },
     }),
   );
-  // const swaggerConfig = new DocumentBuilder()
-  //   .setTitle('Video API')
-  //   .setDescription('API documentation for the Video application')
-  //   .setVersion('1.0')
-  //   .addBearerAuth()
-  //   .build();
-  // const document = SwaggerModule.createDocument(app, swaggerConfig);
-  // SwaggerModule.setup('api/docs', app, document);
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Video API')
+    .setDescription('API documentation for the Video application')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api/docs', app, document);
 
   const port = config.get<number>('port') || 3000;
 
   await app.listen(port ?? 3000);
-  // app.get(Logger).log(`Api run on ${port}`);
 }
 bootstrap();

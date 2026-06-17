@@ -17,9 +17,7 @@ import { StorageModule } from './modules/storage/storage.module';
 import { UsersModule } from './modules/users/users.module';
 import { QueueModule } from './modules/queue/queue.module';
 import { VideosModule } from './modules/videos/videos.module';
-import { VideosController } from './mkdir/modules/videos/videos.controller';
 import { CommentsModule } from './modules/comments/comments.module';
-import { CommentsController } from './mkdir/modules/comments/comments.controller';
 
 @Module({
   imports: [
@@ -58,7 +56,7 @@ import { CommentsController } from './mkdir/modules/comments/comments.controller
     VideosModule,
     CommentsModule,
   ],
-  controllers: [AppController, VideosController, CommentsController],
+  controllers: [AppController],
   providers: [
     { provide: APP_GUARD, useClass: JWTAuthGuard },
     { provide: APP_GUARD, useClass: RolesGuard },

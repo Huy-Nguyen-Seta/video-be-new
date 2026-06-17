@@ -111,7 +111,7 @@ sequenceDiagram
 - `GETDEL` là atomic (đọc + xoá), nên flush không sợ mất view đang được tăng song song.
 - Khi đọc chi tiết video, service cộng thêm phần `pending` trong Redis vào `viewCount` để số không bị trễ tới 10s.
 
-Cron này bật bằng `ENABLE_VIEW_FLUSH=true` và **chỉ nên bật ở một process** (worker là chỗ hợp lý nhất).
+Cron này bật bằng `ENABLE_VIEW_FLUSHER=true` và **chỉ nên bật ở một process** (trong `docker-compose` là process API).
 
 ## Luồng 3 — Đọc danh sách video (cache)
 

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   Logger,
@@ -42,7 +43,7 @@ export class VideosService implements OnModuleInit, OnModuleDestroy {
   ) {}
 
   onModuleInit() {
-    if (process.env.ENABLE_VIEW_FLUSH === 'true') {
+    if (process.env.ENABLE_VIEW_FLUSHER === 'true') {
       this.flushTimer = setInterval(
         () => void this.flushPendingViews(),
         VIEW_FLUSH_INTERVAL,
@@ -208,13 +209,13 @@ export class VideosService implements OnModuleInit, OnModuleDestroy {
 
   private assertVideoFile(file?: Express.Multer.File): asserts file {
     if (!file) {
-      throw new ForbiddenException('No file uploaded');
+      throw new BadRequestException('No file uploaded');
     }
     if (!VIDEO_MINE.includes(file.mimetype)) {
-      throw new ForbiddenException('Invalid file type');
+      throw new BadRequestException('Invalid file type');
     }
     if (file.size > MAX_FILE_SIZE) {
-      throw new ForbiddenException('File too large');
+      throw new BadRequestException('File too large');
     }
   }
 

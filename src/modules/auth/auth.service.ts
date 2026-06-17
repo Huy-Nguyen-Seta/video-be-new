@@ -35,7 +35,7 @@ export class AuthService {
   async login(email: string, password: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
-      throw new Error('Invalid email or password');
+      throw new UnauthorizedException('Invalid email or password');
     }
     const tokens = await this.issueTokens(user);
     return { user: this.sanitize(user), ...tokens };
@@ -48,14 +48,14 @@ export class AuthService {
         secret: this.config.get<StringValue>('jwt.refreshSecret'),
       });
     } catch {
-      throw new Error('Invalid refresh token');
+      throw new UnauthorizedException('Invalid refresh token');
     }
     const tokenHash = this.hashToken(refeshToken);
     const stored = await this.prisma.refeshToken.findFirst({
       where: { userId: payload.sub, tokenHash, revokedAt: null },
     });
     if (!stored || stored.expiresAt < new Date()) {
-      throw new Error('Refresh token expired or revoked');
+      throw new UnauthorizedException('Refresh token expired or revoked');
     }
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },

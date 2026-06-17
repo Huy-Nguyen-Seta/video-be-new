@@ -15,7 +15,7 @@
     "worker": "node dist/worker.js",
     "worker:dev": "ts-node-dev --respawn -r tsconfig-paths/register src/worker.ts",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate devloy",
+    "prisma:migrate": "prisma migrate deploy",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:seed": "ts-node prisma/seed.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -95,6 +95,10 @@
       "ts"
     ],
     "rootDir": "src",
+    "passWithNoTests": true,
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    },
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
